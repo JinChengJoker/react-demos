@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Ajax</title>
+        <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+        <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            var UserGist = React.createClass({
+                getInitialState: function() {
+                    return {
+                        username: '',
+                        lastGistUrl: ''
+                    }
+                },
+                render: function() {
+                    return (
+                        <p>
+                            {this.state.username}'s last gist is 
+                            <a href={this.state.lastGistUrl}> here</a>.
+                        </p>
+                    )
+                },
+                componentDidMount: function() {
+                    let that = this;
+                    $.get(this.props.source, function(result) {
+                        var lastGist = result[0];
+                        that.setState({
+                            username: lastGist.owner.login,
+                            lastGistUrl: lastGist.html_url
+                        })
+                    })
+                }
+            });
+
+            ReactDOM.render(
+                <UserGist source="https://api.github.com/users/octocat/gists" />,
+                document.getElementById('root')
+            )
+        </script>
+    </body>
+</html>

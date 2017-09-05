@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>表单</title>
+        <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+        <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            var Input = React.createClass({
+                getInitialState: function() {
+                    return {
+                        value: 'Hello!'
+                    }
+                },
+                render: function() {
+                    var value = this.state.value;
+                    return (
+                        <div>
+                            <input type="text" value={value} onChange={this.handleChange} />
+                            <p>{value}</p>
+                        </div>
+                    )
+                },
+                handleChange: function(event) {
+                    this.setState({
+                        value: event.target.value
+                    });
+                }
+            });
+
+            ReactDOM.render(
+                <Input />,
+                document.getElementById('root')
+            )
+        </script>
+    </body>
+</html>
